@@ -1,7 +1,7 @@
-import ProductListDashboard from "./components/product-list-dashboard/ProductListDashboard";
+import PricingCalculator from "./components/pricing-calculator/PricingCalculator";
 
 function App() {
-    return <ProductListDashboard />
+    return <PricingCalculator />
 }
 
 export default App;
