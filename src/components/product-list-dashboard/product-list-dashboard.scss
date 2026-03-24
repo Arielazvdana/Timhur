@@ -6,32 +6,33 @@ main.product-lists-main {
 
 .product-lists-container {
     display: flex;
-    justify-content: center;
-    // gap: 80px;
-    background-image: linear-gradient(280deg, #212121, #2e2e2e 30%, #2e2e2e 35%, #1c1c1c 99%);
+    flex-direction: column;
+    align-items: center;
+    background: #ffffff;
     max-width: 100%;
     margin: auto;
-    padding-left: 16px;
-    border: 2px solid #28df99;
-    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 16px;
     position: relative;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
 .chosen-products-title-wrapper {
     display: flex;
     flex-direction: column;
+    width: 100%;
 
     h2 {
         display: flex;
         justify-content: center;
-        color: white;
+        color: #1a1a2e;
+        font-family: "FbCoherentiSans-Bold", sans-serif;
         font-size: 22px;
-        font-weight: bold;
         margin: 16px auto 8px;
         width: fit-content;
         padding-bottom: 4px;
-        border-bottom: 1px solid #28df99;
-        box-shadow: 0 4px 2px -1px rgba(40, 223, 153, .188);
+        border-bottom: 2px solid #2BD9A0;
     }
 }
 
@@ -39,29 +40,30 @@ main.product-lists-main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .chosen-products-wrapper {
     display: flex;
-    height: 100%;
+    width: 100%;
+    gap: 24px;
+    justify-content: center;
 }
 
 .products-total-sum {
     display: flex;
     justify-content: center;
     align-items: center;
-    // background: linear-gradient(345deg,#2adf9a,#2de1a2 21%,#36e2a9 30%,#3fe4b2 39%,#48e5b8 46%,#51e6c1 54%,#5ae7c6 61%,#64e8cb 69%,#6de9d2 79%,#76ead6);
-    border-top: 1px solid #28df99;
-    box-shadow: 0 -4px 2px -1px rgba(40, 223, 153, .188);
-    // border-radius: 4px;
-    width: 50%;
+    border-top: 2px solid #2BD9A0;
+    width: 60%;
     min-height: 36px;
     padding: 12px 48px;
+    margin-top: 8px;
 
     p {
-        color: #fff;
+        color: #1a1a2e;
+        font-family: "FbCoherentiSans-Bold", sans-serif;
         font-size: 18px;
-        font-weight: bold;
     }
 }
 
@@ -72,14 +74,14 @@ main.product-lists-main {
     left: 0;
     width: 28px;
     height: 28px;
-    background: #28df99;
-    border-top-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    background: #2BD9A0;
+    border-top-left-radius: 14px;
+    border-bottom-right-radius: 14px;
     transition: box-shadow 0.1s ease;
 }
 
 .reset-board-btn-wrapper:hover {
-    box-shadow: 0 0 4px 4px #ffffff3c;
+    box-shadow: 0 0 4px 4px rgba(43, 217, 160, 0.3);
     transition: box-shadow 0.1s ease;
 }
 
@@ -93,5 +95,6 @@ main.product-lists-main {
 @media screen and (max-width: 700px) {
     .chosen-products-wrapper {
         flex-direction: column;
+        align-items: center;
     }
 }

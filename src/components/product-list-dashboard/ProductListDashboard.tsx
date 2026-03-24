@@ -15,41 +15,29 @@ import {
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 import Product from "../product/Product.tsx";
-import allContainers from "../../utils/containers.ts";
 import { turnDataIntoObject } from "../../utils/productList.ts";
 import Loader from "../loader/Loader.tsx";
 import ExportButton from "../export-button/ExportButton.tsx";
 import { addCommasToNumber } from "../../utils/numberManipulations.ts";
-// import productList from "../../utils/productList.ts";
 
-const { allProductsContainer, chosenProductsContainer } = allContainers;
-
-const defaultAllProductsContainer: ContainerType[] = allProductsContainer;
-const defaultChosenProductsContainer: ContainerType[] = chosenProductsContainer;
-
-// const defaultProducts: ProductType[] = productList;
+const defaultChosenProductsContainer: ContainerType[] = [
+    { id: "chosenProductsContainer_step1" },
+    { id: "chosenProductsContainer_step2" },
+];
 
 function ProductListDashboard() {
-    // const [defaultProducts, setDefaultProducts] = useState<ProductType[]>([]);
-    const [allProductsContainer, setAllProductsContainer] = useState<ContainerType[]>(defaultAllProductsContainer);
     const [hasClickedResetBtn, setHasClickedResetBtn] = useState(false);
     const [chosenProductsContainer] = useState<ContainerType[]>(defaultChosenProductsContainer);
     const [products, setProducts] = useState<ProductType[]>([]);
     const [step1Sum, setStep1Sum] = useState(0);
     const [step2Sum, setStep2Sum] = useState(0);
     const [totalSum, setTotalSum] = useState(step1Sum + step2Sum);
-    const allProductsContainerId = useMemo(
-        () => allProductsContainer.map((container) => container.id),
-        [allProductsContainer]
-    );
     const chosenProductsContainerId = useMemo(
         () => chosenProductsContainer.map((container) => container.id),
         [chosenProductsContainer]
     );
 
-
     const [activeContainer, setActiveContainer] = useState<ContainerType | null>(null);
-
     const [activeProduct, setActiveProduct] = useState<ProductType | null>(null);
 
     const sensors = useSensors(
@@ -62,16 +50,32 @@ function ProductListDashboard() {
 
     useEffect(() => {
         turnDataIntoObject().then((res) => {
-            if (res) setProducts(res);
+            if (res) {
+                // Distribute products between step1 and step2
+                const distributed = res.map((product, index) => ({
+                    ...product,
+                    container: index < Math.ceil(res.length / 2)
+                        ? "chosenProductsContainer_step1"
+                        : "chosenProductsContainer_step2",
+                }));
+                setProducts(distributed);
+            }
         });
     }, []);
 
     useEffect(() => {
         if (hasClickedResetBtn) {
             turnDataIntoObject().then((res) => {
-                if (res) setProducts(res);
+                if (res) {
+                    const distributed = res.map((product, index) => ({
+                        ...product,
+                        container: index < Math.ceil(res.length / 2)
+                            ? "chosenProductsContainer_step1"
+                            : "chosenProductsContainer_step2",
+                    }));
+                    setProducts(distributed);
+                }
             });
-
             setHasClickedResetBtn(false);
         }
     }, [hasClickedResetBtn]);
@@ -79,8 +83,6 @@ function ProductListDashboard() {
     useEffect(() => {
         setTotalSum(step1Sum + step2Sum);
     }, [step1Sum, step2Sum]);
-
-    //! console.log('products', products); // Check why this renders twice
 
     if (!products.length) {
         return (
@@ -96,9 +98,7 @@ function ProductListDashboard() {
                 products={products.filter((product) => product.container === container.id)}
                 setStep1Sum={setStep1Sum}
                 setStep2Sum={setStep2Sum}
-                className={`product-list-container${
-                    container.id !== "allProductsContainer" ? " chosen-products-container" : ""
-                }`}
+                className="product-list-container chosen-products-container"
             />
         );
     };
@@ -108,7 +108,6 @@ function ProductListDashboard() {
             setActiveContainer(event.active.data.current.container);
             return;
         }
-
         if (event.active.data.current?.type === "Product") {
             setActiveProduct(event.active.data.current.product);
             return;
@@ -124,21 +123,10 @@ function ProductListDashboard() {
 
         const activeId = active.id;
         const overId = over.id;
-        console.log("Just dragged: ", event.active.data.current?.product);
         if (activeId === overId) return;
 
         const isActiveAContainer = active.data.current?.type === "Container";
         if (!isActiveAContainer) return;
-
-        console.log("DRAG END");
-
-        setAllProductsContainer((allProductsContainer) => {
-            const activeContainerIndex = allProductsContainer.findIndex((container) => container.id === activeId);
-
-            const overContainerIndex = allProductsContainer.findIndex((container) => container.id === overId);
-
-            return arrayMove(allProductsContainer, activeContainerIndex, overContainerIndex);
-        });
     }
 
     function onDragOver(event: DragOverEvent) {
@@ -174,13 +162,9 @@ function ProductListDashboard() {
         if (isActiveAProduct && isOverAContainer) {
             setProducts((products) => {
                 const activeIndex = products.findIndex((product) => product.id === activeId);
-
-                // console.log("overId:", overId);
-                // console.log("products[activeIndex].container:", products[activeIndex].container);
                 if (typeof overId === "string") {
                     products[activeIndex].container = overId;
                 }
-                // console.log("DROPPING TASK OVER COLUMN", { activeIndex });
                 return arrayMove(products, activeIndex, activeIndex);
             });
         }
@@ -193,9 +177,6 @@ function ProductListDashboard() {
                     <button className="reset-board-btn-wrapper" onClick={() => setHasClickedResetBtn(true)}>
                         <img src={refreshIcon} alt="refresh" />
                     </button>
-                    <SortableContext items={allProductsContainerId}>
-                        {allProductsContainer.map((container) => renderContainers(container))}
-                    </SortableContext>
                     <div className="chosen-products-title-wrapper">
                         <h2>תהליך תכנון פיננסי</h2>
                         <div className="chosen-products-container">
@@ -226,7 +207,6 @@ function ProductListDashboard() {
                         {activeProduct && (
                             <Product key={activeProduct.id} product={activeProduct} className="product" />
                         )}
-                        {/* {activeProduct && <Product product={activeProduct} updateProduct={updateProduct} />} */}
                     </DragOverlay>,
                     document.body
                 )}

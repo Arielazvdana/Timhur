@@ -1,0 +1,492 @@
+/* Widget CSS variables */
+:root {
+    --green: #19d3a1;
+    --bg: #f4f6f8;
+    --text: #1f2a37;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    --shadowSoft: 0 6px 18px rgba(0, 0, 0, 0.05);
+    --transition: 0.2s ease;
+    --radiusCard: 22px;
+    --radiusChip: 15px;
+}
+
+#futurePriceSimulatorWidget {
+    isolation: isolate;
+}
+#futurePriceSimulatorWidget,
+#futurePriceSimulatorWidget * {
+    box-sizing: border-box;
+}
+#futurePriceSimulatorWidget {
+    font-family: "FbCoherentiSans-Regular", "FbCoherentiSans-Medium", "FbCoherentiSans-Bold", system-ui,
+        -apple-system, "Segoe UI", Arial, sans-serif;
+    background: transparent;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    direction: rtl;
+    color: var(--text);
+}
+
+#futurePriceSimulatorWidget button {
+    appearance: none;
+    -webkit-appearance: none;
+    font-family: inherit;
+    margin: 0;
+}
+
+.psStack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.psCard {
+    border: 1px solid var(--border);
+    border-radius: var(--radiusCard);
+    background: #fff;
+    box-shadow: var(--shadow);
+    padding: 22px;
+    overflow: hidden;
+}
+.psSegTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+.psSegLabel {
+    font-weight: 950;
+    font-size: 18px;
+    color: #0f172a;
+}
+.psSegValue {
+    color: var(--muted);
+    font-weight: 900;
+    font-size: 16px;
+    white-space: nowrap;
+}
+.psRail {
+    position: relative;
+    height: 46px;
+    --progress: 0;
+}
+.psTrack {
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 10px;
+    border-radius: 999px;
+    background: #111111;
+    opacity: 0.14;
+}
+.psFill {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 10px;
+    border-radius: 999px;
+    background: var(--green);
+    right: 18px;
+    width: calc((100% - 36px) * var(--progress));
+    box-shadow: 0 8px 16px rgba(25, 211, 161, 0.2);
+}
+.psKnob {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: calc(18px + (100% - 36px) * (1 - var(--progress)));
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    background: var(--green);
+    border: 4px solid #fff;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.18);
+    pointer-events: none;
+}
+.psRailInput {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 46px;
+    opacity: 0;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+}
+.psRailInput::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+.psRailInput::-moz-range-thumb {
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    border: 0;
+    background: transparent;
+}
+.psRailInput::-moz-range-track {
+    background: transparent;
+    border: 0;
+}
+.psChipsRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 26px;
+    margin-top: 16px;
+    padding: 0 6px;
+    flex-wrap: nowrap;
+}
+.psChip {
+    border: 1px solid transparent !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    outline: 0 !important;
+    padding: 12px 10px;
+    border-radius: var(--radiusChip);
+    cursor: pointer;
+    user-select: none;
+    font-weight: 500 !important;
+    font-size: 18px;
+    color: #4b5563 !important;
+    transition: var(--transition);
+    white-space: nowrap;
+    flex: 1;
+    text-align: center;
+
+    &:hover {
+        color: #1f2a37 !important;
+        background: rgba(0, 0, 0, 0.03) !important;
+    }
+
+    &.active {
+        background: var(--green) !important;
+        color: #0b1220 !important;
+        padding: 12px 18px;
+        box-shadow: 0 10px 22px rgba(25, 211, 161, 0.18) !important;
+        font-weight: 950 !important;
+    }
+}
+
+@media (max-width: 920px) {
+    .psChipsRow {
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .psChip {
+        flex: 1 1 45%;
+    }
+}
+
+.psSummaryGrid {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.psSummaryCard {
+    flex: 1 1 380px;
+    border: 1px solid var(--border);
+    border-radius: var(--radiusCard);
+    background: #fff;
+    box-shadow: var(--shadow);
+    padding: 22px;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.psSummaryHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+.psHeaderTitle {
+    font-weight: 950;
+    font-size: 34px;
+    line-height: 1.05;
+    color: #0f172a;
+    text-align: right;
+    margin: 0;
+    white-space: nowrap;
+}
+.psHeaderMeta {
+    font-weight: 900;
+    font-size: 14px;
+    color: #64748b;
+    text-align: left;
+    white-space: nowrap;
+    margin-top: 8px;
+}
+.psSummaryRow {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+.psServiceDetail {
+    font-weight: 650;
+    font-size: 22px;
+    line-height: 1.15;
+    color: var(--green);
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transform: translateY(-12px);
+}
+.psPriceAmount {
+    font-weight: 950;
+    font-size: 42px;
+    line-height: 1;
+    color: var(--green);
+    white-space: nowrap;
+    text-align: right;
+}
+.psAddGhost {
+    border: 1px solid rgba(15, 23, 42, 0.1) !important;
+    background: #fff !important;
+    color: #0f172a !important;
+    border-radius: 15px !important;
+    padding: 10px 18px !important;
+    font-weight: 950;
+    font-size: 18px !important;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.06);
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    height: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+
+    &:hover {
+        border-color: rgba(15, 23, 42, 0.18) !important;
+    }
+    &:active {
+        transform: translateY(1px);
+    }
+}
+
+.psOffersWrap {
+    border-radius: var(--radiusCard);
+    background: var(--bg);
+    padding: 16px;
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    box-shadow: var(--shadowSoft);
+}
+.psOffersTitle {
+    font-weight: 950;
+    font-size: 24px;
+    color: #0f172a;
+    text-align: right;
+    margin: 0 6px 12px 6px;
+}
+.psOffersGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.psOfferRow {
+    direction: rtl;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: minmax(140px, auto) 1fr auto auto;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    transition: var(--transition);
+    min-height: 80px;
+
+    &.selected {
+        border-color: rgba(25, 211, 161, 0.55);
+        box-shadow: 0 14px 30px rgba(25, 211, 161, 0.12);
+    }
+}
+.psOfferMainCol {
+    display: block;
+    min-width: auto;
+}
+.psOfferMain {
+    font-weight: 950;
+    font-size: 26px;
+    line-height: 1.05;
+    color: #0f172a;
+    white-space: nowrap;
+}
+.psOfferSubWrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.psOfferSubCol {
+    font-weight: 650;
+    font-size: 18px;
+    line-height: 1.15;
+    color: var(--green);
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.psRecInline {
+    display: none;
+    white-space: nowrap;
+    font-weight: 950;
+    font-size: 13px;
+    line-height: 1;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--green);
+    color: #0b1220;
+    border: 1px solid rgba(25, 211, 161, 0.65);
+    box-shadow: 0 10px 22px rgba(25, 211, 161, 0.18);
+}
+.psOfferRow.recommended .psRecInline {
+    display: inline-flex;
+}
+.psOfferPriceCol {
+    font-weight: 950;
+    font-size: 18px;
+    color: #0f172a;
+    white-space: nowrap;
+    text-align: left;
+    min-width: 120px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 4px;
+}
+.psMoney {
+    color: var(--green);
+}
+.psOfferActions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.psIconBtn {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 15px !important;
+    border: 1px solid rgba(15, 23, 42, 0.08) !important;
+    background: #fff !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    user-select: none;
+    flex-shrink: 0;
+    padding: 0 !important;
+
+    &:hover {
+        border-color: rgba(15, 23, 42, 0.16) !important;
+    }
+    &:active {
+        transform: translateY(1px);
+    }
+
+    svg {
+        width: 20px;
+        height: 20px;
+        display: block;
+    }
+
+    &.danger {
+        color: #ef4444 !important;
+        background: rgba(239, 68, 68, 0.06) !important;
+        &:hover {
+            background: rgba(239, 68, 68, 0.1) !important;
+        }
+    }
+
+    &.ok {
+        color: var(--green) !important;
+        background: rgba(25, 211, 161, 0.08) !important;
+        &:hover {
+            background: rgba(25, 211, 161, 0.12) !important;
+        }
+    }
+}
+.psOfferRow.recommended .psIconBtn.ok {
+    background: var(--green) !important;
+    color: #0b1220 !important;
+    border-color: transparent !important;
+    box-shadow: 0 10px 22px rgba(25, 211, 161, 0.18) !important;
+}
+.psEmptyHint {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 16px;
+    color: #64748b;
+    font-weight: 900;
+    font-size: 15px;
+    line-height: 1.5;
+    text-align: right;
+}
+
+@media (max-width: 860px) {
+    .psOfferRow {
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "main price"
+            "sub sub"
+            "actions actions";
+        gap: 10px;
+        padding: 18px;
+    }
+    .psOfferMainCol {
+        grid-area: main;
+    }
+    .psOfferPriceCol {
+        grid-area: price;
+        justify-content: flex-end;
+    }
+    .psOfferSubWrap {
+        grid-area: sub;
+    }
+    .psOfferActions {
+        grid-area: actions;
+        justify-content: flex-start;
+        margin-top: 8px;
+    }
+}
+@media (max-width: 560px) {
+    .psHeaderTitle {
+        font-size: 30px;
+    }
+    .psPriceAmount {
+        font-size: 36px;
+    }
+    .psOfferMain {
+        font-size: 22px;
+    }
+    .psCard {
+        padding: 18px;
+        border-radius: 18px;
+    }
+    .psChip {
+        width: 100%;
+        text-align: center;
+    }
+    .psChipsRow {
+        padding: 0;
+    }
+}
