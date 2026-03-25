@@ -16,7 +16,6 @@ import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 import Product from "../product/Product.tsx";
 import { turnDataIntoObject } from "../../utils/productList.ts";
-import Loader from "../loader/Loader.tsx";
 import ExportButton from "../export-button/ExportButton.tsx";
 import { addCommasToNumber } from "../../utils/numberManipulations.ts";
 
@@ -83,12 +82,6 @@ function ProductListDashboard() {
     useEffect(() => {
         setTotalSum(step1Sum + step2Sum);
     }, [step1Sum, step2Sum]);
-
-    if (!products.length) {
-        return (
-            <Loader imgSrc='<img width="800" height="490" src="https://www.financialplanning.co.il/wp-content/uploads/2023/02/לוגו-עם-אייקון-future-תכנון-פיננסי-1024x627.webp" class="attachment-large size-large wp-image-16239" alt="לוגו עם אייקון future תכנון פיננסי" srcset="https://www.financialplanning.co.il/wp-content/uploads/2023/02/לוגו-עם-אייקון-future-תכנון-פיננסי-1024x627.webp 1024w, https://www.financialplanning.co.il/wp-content/uploads/2023/02/לוגו-עם-אייקון-future-תכנון-פיננסי-300x184.webp 300w, https://www.financialplanning.co.il/wp-content/uploads/2023/02/לוגו-עם-אייקון-future-תכנון-פיננסי-768x471.webp 768w, https://www.financialplanning.co.il/wp-content/uploads/2023/02/לוגו-עם-אייקון-future-תכנון-פיננסי.webp 1508w" sizes="(max-width: 800px) 100vw, 800px" data-node-item="1676">' />
-        );
-    }
 
     const renderContainers = (container: ContainerType) => {
         return (
